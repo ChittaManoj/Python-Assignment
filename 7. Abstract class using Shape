@@ -1,0 +1,110 @@
+# Area abstract class using shape
+class Shape:
+    def calculate_area(self):
+        pass
+    def calculate_perimeter(self):
+        pass
+    def getinfo(self):
+        pass
+# Circle class inheriting from Shape
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    def calculate_area(self):
+        return 3.14 * self.radius * self.radius
+    def calculate_perimeter(self):
+        return 2 * 3.14 * self.radius
+    def getinfo(self):
+        return f"Circle with radius {self.radius}"
+    def from_tuple(cls, dimensions):
+        radius = dimensions
+        return cls(radius)
+    def combine_shapes_area(self,Other):
+        return self.calculate_area() + Other.calculate_area()
+    def total_perimeter (self, other):
+        return self.calculate_perimeter() + other.calculate_perimeter()
+    
+# Rectangle class inheriting from Shape
+class Rectangle(Shape):  
+    def __init__(self, length, width):
+        self.length = length
+        self.width = width
+    def calculate_area(self):
+        return self.length * self.width
+    def calculate_perimeter(self):
+        return 2 * (self.length + self.width)
+    def getinfo(self):
+        return f"Rectangle with length {self.length} and width {self.width}"
+    def from_tuple(cls, dimensions):
+        length, width = dimensions
+        return cls(length, width)
+    def combine_shapes_area(self,Other):
+        return self.calculate_area() + Other.calculate_area()
+    def total_perimeter (self, other):
+        return self.calculate_perimeter() + other.calculate_perimeter()
+# Triangle class inheriting from Shape
+class Triangle(Shape):
+    def __init__(self, base, height):
+        self.base = base
+        self.height = height
+    def calculate_area(self):
+        return 0.5 * self.base * self.height
+    def calculate_perimeter(self):
+        return self.base + 2 * (self.height ** 2 + 0.25 * self.base ** 2) ** 0.5
+    def getinfo(self):
+        return f"Triangle with base {self.base} and height {self.height}"
+    def from_tuple(cls, dimensions):
+        base, height = dimensions
+        return cls(base, height)
+    def combine_shapes_area(self,Other):
+        return self.calculate_area() + Other.calculate_area()
+    def total_perimeter (self, other):
+        return self.calculate_perimeter() + other.calculate_perimeter()
+
+
+class ShapeManager:
+
+    def __init__(self):
+        self.shapes=[]
+
+    def add_shape(self, shape):
+        self.shapes.append(shape)
+
+    def calculate_total_area(self):
+        return sum(shape.calculate_area() for shape in self.shapes)
+
+    def get_shape_info(self):
+        return [shape.getinfo() for shape in self.shapes]
+    
+    def remove_shape(self,shape):
+        if shape in self.shapes:
+            self.shapes.remove(shape)
+        else:
+            return "Shape not found in the collection."
+
+shape_manager = ShapeManager()
+circle_radius = float(input("Enter the radius of the circle: "))
+circle = Circle.from_tuple(Circle,(circle_radius))
+rectangle_length = float(input("Enter the length of the rectangle: "))
+rectangle_width = float(input("Enter the width of the rectangle: "))
+rectangle = Rectangle.from_tuple(Rectangle,(rectangle_length, rectangle_width))
+triangle_base = float(input("Enter the base of the triangle: "))
+triangle_height = float(input("Enter the height of the triangle: "))
+triangle = Triangle.from_tuple(Triangle,(triangle_base, triangle_height))
+
+print("Circle Radius:", circle.radius)
+print("Rectangle Length:", rectangle.length)
+print("Rectangle Width:", rectangle.width)
+print("Triangle Base:", triangle.base)
+print("Triangle Height:", triangle.height)
+
+shape_manager.add_shape(circle) 
+shape_manager.add_shape(rectangle)
+shape_manager.add_shape(triangle)
+print("Total Area of all shapes:", shape_manager.calculate_total_area())    
+print("Shape Information:", shape_manager.get_shape_info())
+
+shape_manager.remove_shape(rectangle)
+print("After removing rectangle:")  
+print("Total Area of all shapes:", shape_manager.calculate_total_area())
+print("Shape Information:", shape_manager.get_shape_info())
