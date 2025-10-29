@@ -1,0 +1,45 @@
+# 5 Custom Exception for Password Validation
+import re
+class EmptyPasswordError (Exception):
+    def __init__(self):
+        self.message = "Password cannot be empty"
+        super().__init__(self.message)
+
+class ShortPasswordError (Exception):
+    def __init__(self):
+        self.message = "Password is too short"
+        super().__init__(self.message)
+
+class NospecialCharacterError (Exception):
+    def __init__(self):
+        self.message = "Password must contain at least one special character"
+        super().__init__(self.message)
+
+class NodigitError (Exception):
+    def __init__(self):
+        self.message = "Password must contain at least one digit"
+        super().__init__(self.message)
+
+input_password = input("Enter your password: ")
+
+def check_password(password):
+    if not password:
+        raise EmptyPasswordError
+    elif len(password) < 8:
+        raise ShortPasswordError
+    elif not any(char.isdigit() for char in password) :
+        raise NodigitError
+    elif not re.search(r'[^a-zA-Z0-9]', password):
+        raise NospecialCharacterError
+    else:
+        return "Strong"
+    
+flag = True
+while(flag):
+    try:
+        check_password(input_password)
+        flag=False
+        print(f"Thanks! Your password is good to go")
+    except Exception as e:
+        print(f"Error: {e}")
+        input_password = input("Enter your password: ")
