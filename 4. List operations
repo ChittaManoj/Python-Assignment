@@ -1,0 +1,27 @@
+# 4 List operations - sorting, reversing, ascending and descending order
+input_str = input("Enter Integer values separated by spaces: ")
+Input_Integers = [int(value) for value in input_str.split()]
+print("original list:", Input_Integers)
+
+reversed_list = list(reversed(Input_Integers))
+print("reversed list:", reversed_list)
+
+sorted_list = sorted(Input_Integers)
+print("sorted list (ascending):", sorted_list)
+
+sorted_list = sorted(Input_Integers, reverse=True)
+print("sorted list (descending):", sorted_list)
+
+def ascending_order(lst):
+    return sorted(lst)
+
+def descending_order(lst):
+    return sorted(lst, reverse=True)
+
+input_user_option = input("Enter 'a' for ascending order or 'd' for descending order: ").strip().lower()
+if input_user_option == 'a':
+    print("Ascending order:", ascending_order(Input_Integers))
+elif input_user_option == 'd':
+    print("Descending order:", descending_order(Input_Integers))
+elif input_user_option != 'a' and input_user_option != 'd':
+    print("Not a valid option")
